@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Map of Vibhav</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header text-center">
+            <header>
+                <h1>Know your Neighborhood</h1>
+            </header>
+        </div>
+        <hr>
+        <div class="img-responsive text-center ">
+            <form data-bind="submit: setResetMap">
+                <div class="col-md-4 formDiv">
+                    <strong>City name -></strong> <input class="upperInput" type="text" placeholder="Enter the location to search!" data-bind='value : userCityName'>
+                </div>
+                <div class="col-md-4 formDiv">
+                    <strong>Location type -></strong><input class="upperInput" type="text" placeholder="Search for places nearby" data-bind='value : locationCategory'>
+                </div>
+                <div class="col-md-4 formDiv">
+                    <strong>Number of places (upto 20) -></strong><input class="upperInput" type="number" min="1" max="20" value="5" placeholder="no of places to search" data-bind='value : placeQuantity'>
+                </div>
+
+                <button class="btn btn-default formDiv" type="submit"><span class="glyphicon glyphicon-search"> Search</span></button>
+            </form>
+        </div>
+        <div class="lowerArea">
+            <div class="col-md-6" id="vibhavMap"></div>
+            <div class="col-md-6">
+                <div>
+                    <p><strong>Filter result by keywords</strong></p>
+                    <input type="input" id="filterBox" data-bind='value : inputKeyword , valueUpdate : "keyup"' placeholder="Enter any specific keyword to search">
+                </div>
+                <div class="placeArray ">
+                    <ul class="text-center" data-bind="foreach : displayListArray">
+                        <li class="customList" data-bind="text : $data , click : pinTrigger"></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <footer class="text-center">
+            Location info fetched from foursquare api. Google maps api used for map.
+            <script src="js/knockout-3.2.0.js"></script>
+            <script src="js/app.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDi8sdJFlohMIGwuWuMwcdxeMZYWRcQ9U0&v=3&callback=initMap" onerror="mapError()"></script>
+        </footer>
+    </div>
+</body>
+
+</html>
