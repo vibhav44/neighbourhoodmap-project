@@ -7,6 +7,7 @@ This project displays the neighbourhood the user would like to explore .
 3. Google maps API is used for displaying the location.
 4. Foursquare API is used for finding the type of place in that particular area.
 5. Locations are filtered as per keyword provided by the user.
+6. Knockoutjs is used to bind the variables and functions.
 
 # How to run this project
 1. Open the directory and run index.html in any browser.
