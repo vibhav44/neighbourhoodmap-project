@@ -115,7 +115,7 @@ function displayMarkerInfo(marker, usrInfoBox) {
     }, 1500);
 
     marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
-
+    //alert(this.title);
     usrInfoBox.setContent("<h1>" + marker.title + "</h1>" + "<b>Contact no : </b>" + marker.phoneNo + "<br><b>Country : </b>" + marker.state + "<br><b>Zip code : </b>" + marker.zipCode);
 
     usrInfoBox.open(myUserMap, marker);
