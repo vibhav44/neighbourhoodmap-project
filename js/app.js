@@ -53,19 +53,19 @@ function foursquareDataFetch(query, placeQuantity) {
 
             var tempPhone, tempState, tempZip;
 
-            if (fsqDataArray[no].contact.phone === null) {
+            if (fsqDataArray[no].contact.phone === null || !fsqDataArray[no].contact.phone) {
                 tempPhone = 'not available';
             } else {
                 tempPhone = fsqDataArray[no].contact.phone;
             }
 
-            if (fsqDataArray[no].location.postalCode === null) {
+            if (fsqDataArray[no].location.postalCode === null || !fsqDataArray[no].location.postalCode) {
                 tempZip = 'not available';
             } else {
                 tempZip = fsqDataArray[no].location.postalCode;
             }
 
-            if (fsqDataArray[no].location.country === null) {
+            if (fsqDataArray[no].location.country === null || !fsqDataArray[no].location.country) {
                 tempState = 'not available';
             } else {
                 tempState = fsqDataArray[no].location.country;
@@ -83,8 +83,12 @@ function foursquareDataFetch(query, placeQuantity) {
             });
             updateRangeView.extend(marker.position);
 
-            marker.addListener('click', function() {
-                displayMarkerInfo(this, usrInfoBox);
+           marker.addListener('click', function() {
+                  var markerPhone, markerState, markerZip;
+                  this.phoneNo ? markerPhone = this.phoneNo : markerPhone = 'not available';
+                  this.state ?  markerState = this.state : markerState = 'not available';
+                  this.zipCode ? markerZip = this.zipCode : markerZip = 'not available';
+                  alert(this.title + "\n" + "Contact no : " + markerPhone + "\nCountry : " + markerState + "\nZip code : " + markerZip);
             });
 
             mapPinArray.push(marker);
