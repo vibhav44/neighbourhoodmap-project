@@ -48,51 +48,49 @@ function foursquareDataFetch(query, placeQuantity) {
         var fsqDataArray = response.response.venues;
         var updateRangeView = new google.maps.LatLngBounds();
         console.log(fsqDataArray);
-        for (var no = 0; no < fsqDataArray.length; no++) {
-            var latLng = new google.maps.LatLng(parseFloat(fsqDataArray[no].location.lat), parseFloat(fsqDataArray[no].location.lng));
 
-            var tempPhone, tempState, tempZip;
+        fsqDataArray.forEach(function(iter){
+          var latLng = new google.maps.LatLng(parseFloat(iter.location.lat), parseFloat(iter.location.lng));
 
-            if (fsqDataArray[no].contact.phone === null || !fsqDataArray[no].contact.phone) {
-                tempPhone = 'not available';
-            } else {
-                tempPhone = fsqDataArray[no].contact.phone;
-            }
+          var tempPhone, tempState, tempZip;
 
-            if (fsqDataArray[no].location.postalCode === null || !fsqDataArray[no].location.postalCode) {
-                tempZip = 'not available';
-            } else {
-                tempZip = fsqDataArray[no].location.postalCode;
-            }
+          if (iter.contact.phone === null || !iter.contact.phone) {
+              tempPhone = 'not available';
+          } else {
+              tempPhone = iter.contact.phone;
+          }
 
-            if (fsqDataArray[no].location.country === null || !fsqDataArray[no].location.country) {
-                tempState = 'not available';
-            } else {
-                tempState = fsqDataArray[no].location.country;
-            }
+          if (iter.location.postalCode === null || !iter.location.postalCode) {
+              tempZip = 'not available';
+          } else {
+              tempZip = iter.location.postalCode;
+          }
 
-            var marker = new google.maps.Marker({
-                position: latLng,
-                title: fsqDataArray[no].name,
-                animation: google.maps.Animation.DROP,
-                map: myUserMap,
-                phoneNo: tempPhone,
-                state: tempState,
-                zipCode: tempZip,
-                icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-            });
-            updateRangeView.extend(marker.position);
+          if (iter.location.country === null || !iter.location.country) {
+              tempState = 'not available';
+          } else {
+              tempState = iter.location.country;
+          }
 
-           marker.addListener('click', function() {
-                  var markerPhone, markerState, markerZip;
-                  this.phoneNo ? markerPhone = this.phoneNo : markerPhone = 'not available';
-                  this.state ?  markerState = this.state : markerState = 'not available';
-                  this.zipCode ? markerZip = this.zipCode : markerZip = 'not available';
-                  alert(this.title + "\n" + "Contact no : " + markerPhone + "\nCountry : " + markerState + "\nZip code : " + markerZip);
-            });
+          var marker = new google.maps.Marker({
+              position: latLng,
+              title: iter.name,
+              animation: google.maps.Animation.DROP,
+              map: myUserMap,
+              phoneNo: tempPhone,
+              state: tempState,
+              zipCode: tempZip,
+              icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+          });
 
-            mapPinArray.push(marker);
-        }
+          iter.marker=marker;
+
+          marker.addListener("click",function(){
+          displayMarkerInfo(marker, usrInfoBox);
+          });
+          updateRangeView.extend(marker.position);
+          mapPinArray.push(marker);
+        });
 
         google.maps.event.addDomListener(window, 'resize', function() {
             myUserMap.fitBounds(updateRangeView); // `bounds` is a `LatLngBounds` object
